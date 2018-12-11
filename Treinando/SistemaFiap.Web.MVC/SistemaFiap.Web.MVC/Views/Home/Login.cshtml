@@ -1,0 +1,22 @@
+﻿@model string
+
+<div class="text-center container-fluid" style="width: 400px; height 400px;">
+    @using (Html.BeginForm())
+    {
+        <h1 class="card-title text-center">PORTAL</h1>
+            @Fabrica.Mensagem(TempData["msg"] as string, "alert alert-danger")
+        <div class="row">
+            <div class="col form-control">
+                @Fabrica.Label("codigo")
+                @Fabrica.TextBox("codigo")
+            </div>
+            <div class="col form-control">
+                @Fabrica.Label("senha")
+                @Fabrica.TextBox("senha")
+            </div>
+        </div>
+        <div class="row">
+            @Fabrica.Botao("Conectar", "btn btn-danger")
+        </div>
+    }
+</div>

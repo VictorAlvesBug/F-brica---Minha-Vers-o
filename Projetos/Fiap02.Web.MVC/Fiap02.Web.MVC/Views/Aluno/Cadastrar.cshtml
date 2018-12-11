@@ -1,0 +1,55 @@
+﻿
+@model Fiap02.Web.MVC.Models.Aluno
+
+@{
+    ViewBag.Title = "Cadastrar";
+}
+
+<h2>Cadastrar</h2>
+
+<!-- GET - APARECE OS DADOS NA URL -->
+<!-- POST - NÃO APARECE OS DADOS NA URL -->
+
+<form action="/aluno/cadastrar" method="post">
+    <div class="form-group">
+        <label for="id-nome">Nome</label>
+        <input placeholder="Digite seu nome" class="form-control" type="text" name="nome" id="id-nome" />
+    </div>
+    <div class="form-group">
+        <label for="id-curso">Curso</label>
+        <select class="form-control" name="curso" id="id-curso">
+            <option <selected>Selecione</option>
+            <option value="EM">Engenharia Mecatrônica</option>
+            <option value="SI">Sistemas de Informação</option>
+            <option value="ADM">Administração</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <input type="radio" name="periodo" value="0" id="id-diurno" />
+        <label for="id-diurno">Diurno</label>
+        <input type="radio" name="periodo" value="1" id="id-noturno" />
+        <label for="id-noturno">Noturno</label>
+    </div>
+    <div class="form-group">
+        <input type="checkbox" name="funcionario" id="id-func" />
+        <label for="id-func">Funcionario</label>
+    </div>
+    <div class="form-group">
+        <label for="id-desc">Descrição</label>
+        <textarea class="form-control" id="id-desc" name="descricao"></textarea>
+    </div>
+    <div>
+        <button class="btn btn-primary" type="submit">Cadastrar</button>
+    </div>
+
+    <div>
+        <p>@TempData["nome"] //Com TempData["nome"]</p>
+        <p>@ViewBag.nome //Com ViewBag.nome</p>
+        <p>--------</p>
+        <p>@Model.Nome</p>
+        <p>@Model.Curso</p>
+        <p>@Model.Periodo</p>
+        <p>@Model.Funcionario</p>
+        <p>@Model.Descricao</p>
+    </div>
+</form>

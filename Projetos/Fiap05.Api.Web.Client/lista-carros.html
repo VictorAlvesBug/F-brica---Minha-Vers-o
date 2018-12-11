@@ -1,0 +1,54 @@
+<html>
+	<head>
+		<title> Lista de carros </title>
+	</head>
+	<body>
+		<h1> Lista de carros </h1>
+		<table>
+			<thead>
+				<tr>
+					<th> Placa </th>
+					<th> Combustível </th>
+					<th> Descrição </th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+		<script src="jquery-3.0.0.min.js"></script>
+		<script>
+		$().ready(function(){
+					// CHAMA O WEBSERVISE PARA RECUPERAR OS CARROS
+			$.ajax({
+				url: "http://localhost:52906/api/carro",
+				method: "Get",
+				success: function(data){
+					// PERCORRE LISTA
+                    $.each(data, function (index, carro) {
+                    	//CRIA UMA LINHA
+                        var linha = $('<tr>');
+
+                        //CRIA A CELULA DE PLACA E ADD NA LINHA
+                        var placa = $('<td>').text(carro.Placa);
+                        linha.append(placa);
+
+                        //CRIA A CELULA DE COMBUSTIVEL E ADD NA LINHA
+                        var combustivel = $('<td>').text(carro.Combustivel);
+                        linha.append(combustivel);
+
+                        //CRIA A CELULA DE DESCRICAO E ADD NA LINHA
+                        var descricao = $('<td>').text(carro.Descricao);
+                        linha.append(descricao);
+
+                        //ADICIONA LINHA AO CORPO DA LISTA
+                        $('tbody').append(linha);
+                    });
+				},
+				error: function(){
+
+				}
+			});
+		});
+		</script>
+	</body>
+</html>

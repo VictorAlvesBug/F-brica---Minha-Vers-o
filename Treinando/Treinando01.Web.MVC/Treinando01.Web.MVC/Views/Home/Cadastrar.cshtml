@@ -1,0 +1,22 @@
+﻿@model Treinando01.Web.MVC.Models.AlunoModel
+
+@{
+    ViewBag.Title = "Cadastrar";
+}
+
+<h2>Cadastrar</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        @Html.LabelFor(a => a.Nome)
+        @Html.TextBoxFor(a => a.Nome)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(a => a.Rm)
+        @Html.TextBoxFor(a => a.Rm)
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </div>
+}

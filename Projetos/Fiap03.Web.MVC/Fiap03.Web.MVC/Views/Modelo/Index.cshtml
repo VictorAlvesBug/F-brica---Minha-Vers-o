@@ -1,0 +1,67 @@
+﻿@* @model Fiap03.Web.MVC.Controllers.ModeloController.Modelo_1_e_N *@
+@model Fiap03.Web.MVC.ViewModel.ModeloViewModel
+
+@{
+    ViewBag.Title = "Modelo";
+}
+
+<h2 class="text-center">Modelos - @Model.NomeMarca</h2>
+<hr />
+
+@Fabrica.Mensagem(TempData["msg"] as string)
+
+@* LISTA TODOS OS ERROS DE VALIDAÇÃO QUE OCORRERAM *@
+@* @Html.ValidationSummary() *@
+
+<div class="row">
+    <div class="col">
+        <h3 class="text-center">Cadastrar</h3>
+        @using (Html.BeginForm("Cadastrar", "Modelo", FormMethod.Post, new { autocomplete = "off" }))
+        {
+            @Html.HiddenFor(m => m.Modelo.MarcaId)
+        <div class="form-group">
+            @Html.LabelFor(m => m.Modelo.Nome)
+            @Html.TextBoxFor(m => m.Modelo.Nome, new
+       {
+           @class ="form-control"
+       })
+            @Html.ValidationMessageFor(c => c.Modelo.Nome)
+        </div>
+            <div class="form-group">
+                @Fabrica.Botao("Cadastrar")
+                @Html.ActionLink("Voltar", "Listar", "Marca", null, new { @class = "btn btn-success" })
+            </div>
+        }
+    </div>
+    <div class="col">
+        <h3 class="text-center">Lista</h3>
+        @if (Model.Lista.Any())
+        {
+            <div class="container text-center">
+                <div class="row">
+                    @for (int i = 0; i < Model.Lista.Count(); i++)
+                    {
+                        <div class="col-4 text-center border col-form-label">
+                            @Model.Lista[i].Nome
+                        </div>
+                    }
+                </div>
+            </div>
+
+            @*<table class="table table-bordered">
+                    <tbody>
+                        @foreach (var modelo in Model)
+                        {
+                            <tr class="text-center">
+                                <td class="align-middle">@modelo.Nome</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>*@
+        }
+        else
+        {
+            @Fabrica.Mensagem("Nenhuma marca encontrada")
+        }
+    </div>
+</div>

@@ -1,0 +1,29 @@
+﻿@helper Botao(string texto)
+{
+    <button type="submit" class="btn btn-primary">@texto</button>
+}
+
+@helper Botao(string texto, string classe)
+{
+    <button type="submit" class="@classe btn btn-primary">@texto</button>
+}
+
+@helper Botao(string texto, string action, string controller)
+{
+    <a href="../@controller/@action" class="btn btn-primary">@texto</a>
+}
+
+@helper Botao(string texto, string action, string controller, string classe)
+{
+    <a href="../@controller/@action" class="@classe">@texto</a>
+}
+
+@helper Mensagem(string tempData)
+{
+    if (@tempData != null)
+    {
+        <div class="alert alert-success">
+            @tempData
+        </div>
+    }
+}

@@ -1,0 +1,32 @@
+﻿@model Fiap03.Web.MVC.ViewModel.UsuarioViewModel
+@{
+    ViewBag.Title = "Cadastrar";
+}
+
+
+<div class="container alert-primary col-4" style="border-radius:20px">
+    <br />
+    <h2 class="text-center container-fluid">Cadastrar</h2>
+    <br />
+    @using (Html.BeginForm())
+    {
+        <div class="form-group">
+            @Html.LabelFor(u => u.Login)
+            @Html.TextBoxFor(u => u.Login, new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(u => u.Senha)
+            @Html.PasswordFor(u => u.Senha, new { @class = "form-control" })
+        </div>
+
+        <div class="col text-center">
+            @Fabrica.Botao("Cadastrar", "col text-center")
+        </div>
+        <br />
+    }
+</div>
+
+@Html.ValidationSummary()
+
+

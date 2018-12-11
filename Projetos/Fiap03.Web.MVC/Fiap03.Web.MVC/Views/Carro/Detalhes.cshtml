@@ -1,0 +1,16 @@
+﻿@model Fiap03.Web.MVC.Models.CarroModel
+
+@{
+    ViewBag.Title = "Detalhes do carro";
+}
+
+<h2 class="text-center">Detalhes do carro</h2>
+<hr />
+
+@using (Html.BeginForm())
+{
+<div class="form-group">
+    @Html.LabelFor(c => c.Marca)
+    <p>@Model.Marca</p>
+</div>
+}

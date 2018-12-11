@@ -1,0 +1,35 @@
+﻿@model List<Treinando01.Web.MVC.Models.AlunoModel>
+@{
+    ViewBag.Title = "Listar";
+}
+
+<h2>Listar</h2>
+
+@if (Model.Any())
+{
+    <table class="table">
+    <thead>
+        <tr>
+            <th> Id   </th>
+            <th> Nome </th>
+            <th> RM   </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var aluno in Model)
+        {
+            <tr>
+                <td> @aluno.Id   </td>
+                <td> @aluno.Nome </td>
+                <td> @aluno.Rm   </td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+else
+{
+    <div class="alert-primary">
+        Nenhum aluno encontrado
+    </div>
+}

@@ -1,0 +1,67 @@
+﻿@model Fiap03.Web.MVC.Models.MarcaModel
+
+@{
+    ViewBag.Title = "Carros da Marca";
+}
+
+<h2 class="text-center">@Model.Nome - @Model.DataCriacao.ToShortDateString() - CNPJ: @Model.Cnpj</h2>
+<hr />
+
+@if (Model.Carros.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr class="text-center">
+                <th class="align-middle"> Id                 </th>
+                <th class="align-middle"> Marca              </th>
+                <th class="align-middle"> Ano                </th>
+                <th class="align-middle"> Placa              </th>
+                <th class="align-middle"> Esportivo          </th>
+                <th class="align-middle"> Combustível        </th>
+                <th class="align-middle"> Descrição          </th>
+                <th class="align-middle"> Renavam            </th>
+                <th class="align-middle"> Categoria          </th>
+                <th class="align-middle"> Data de Fabricação </th>
+                <th class="align-middle" colspan="2"> Ações  </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var carro in Model.Carros)
+            {
+                <tr class="text-center">
+                    <td class="align-middle"> @carro.Id                                           </td>
+                    <td class="align-middle"> @carro.Marca                                        </td>
+                    <td class="align-middle"> @carro.Ano                                          </td>
+                    <td class="align-middle"> @carro.Placa                                        </td>
+                    <td class="align-middle"> @carro.Esportivo                                    </td>
+                    <td class="align-middle"> @carro.Combustivel                                  </td>
+                    <td class="align-middle"> @carro.Descricao                                    </td>
+                    <td class="align-middle"> @*@carro.Renavam*@                                      </td>
+                    <td class="align-middle">
+                        @*@carro.Documento.Categoria*@
+                    </td>
+                    <td class="align-middle">
+                        @*@carro.Documento.DataFabricacao.ToShortDateString()*@
+                    </td>
+                    <td class="align-middle">
+                        @Html.ActionLink("Editar", "Editar", "Carro", new { id = carro.Id }, new { @class = "btn btn-outline-primary" })
+                    </td>
+                    <td class="align-middle">
+                        <!-- Button trigger modals -->
+                        <button onclick="codigoExcluir.value = @carro.Id" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalExcluir">
+                            Excluir
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    @Fabrica.Mensagem("Nenhum carro encontrado")
+}
+
+<div class="text-right">
+    @Fabrica.Botao("Voltar", "Listar", "Marca", "btn btn-success")
+</div>

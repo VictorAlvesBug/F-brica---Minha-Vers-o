@@ -1,0 +1,107 @@
+﻿@model List<Fiap03.Web.MVC.Models.MarcaModel>
+
+@{
+    ViewBag.Title = "Listar marca";
+}
+
+@Fabrica.Mensagem(@TempData["msg"] as string)
+
+<h2 class="text-center">Lista de marcas</h2>
+<hr />
+
+@if (Model.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr class="text-center">
+                <th> Id                </th>
+                <th> Nome              </th>
+                <th> Data de Criação   </th>
+                <th> CNPJ              </th>
+                <th colspan="4" class="text-center"> Ações </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var marca in @Model)
+            {
+                <tr class="text-center">
+                    <td class="align-middle"> @marca.Id                               </td>
+                    <td class="align-middle"> @marca.Nome                             </td>
+                    <td class="align-middle"> @marca.DataCriacao.ToShortDateString()  </td>
+                    <td class="align-middle"> @marca.Cnpj                             </td>
+                    <td class="align-middle">
+                        @Html.ActionLink("Carros", "Detalhes", new { idDaMarca = marca.Id }, new { @class = "btn btn-outline-success" })
+                    </td>
+                    <td class="align-middle">
+                        @Html.ActionLink("Modelos", "Index", "Modelo", new { marcaId = marca.Id }, new { @class = "btn btn-outline-info" })
+                    </td>
+                    <td class="align-middle">
+                        @Html.ActionLink("Editar", "Editar", new { id = marca.Id }, new { @class = "btn btn-outline-primary" })
+                    </td>
+                    <td class="align-middle">
+                        <!-- Button trigger modal -->
+                        <button onclick="codigoExcluir.value = @marca.Id" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#excluirModal">
+                            Excluir
+                        </button>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}
+else
+{
+    @Fabrica.Mensagem("Nenhuma marca encontrada")
+}
+
+<!-- Modal Excluir -->
+<div class="modal fade" id="excluirModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Deseja excluir esta marca?</p>
+            </div>
+            <div class="modal-footer">
+                <!-- FORMULÁRIO URL: /Carro/Excluir - POST -->
+                @using (Html.BeginForm("Excluir", "Marca"))
+                {
+                    <!-- CAMPO PARA O ID -->
+                    <input type="hidden" name="codigo" id="codigoExcluir" />
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Excluir</button>
+                    <!-- QUANDO USAMOS O TYPE=SUBMIT ELE ENVIA OS DADOS DO FORMULARIO PARA O ENDEREÇO ESPECIFICADO -->
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+<script>
+
+    $().ready(function () {
+
+        $('td>.btn').css('visibility', 'hidden');
+
+        $('tr').hover(
+            function () {
+                $(this).find('td>.btn').css('visibility', 'visible');
+            },
+            function () {
+                $(this).find('td>.btn').css('visibility', 'hidden');
+            });
+
+    });
+</script>
+}
+@*
+    cor da fiap - #ff007f
+*@

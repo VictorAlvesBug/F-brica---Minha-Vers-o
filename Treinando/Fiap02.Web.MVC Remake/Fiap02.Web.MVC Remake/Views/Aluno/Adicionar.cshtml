@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Adicionar";
+}
+
+<h2>Adicionar</h2>
+
+<form action="/aluno/listar"  method="post">
+    <div>
+        <div class="col col-md-4">
+            <label alt="id-nome">Nome</label>
+            <input class="form-control" type="text" name="nome" id="id-nome" />
+        </div>
+        <div class="col col-md-4">
+            <label alt="id-ano">Ano</label>
+            <select class="form-control" name="ano" id="id-ano">
+                <option value="1 F2"><selected> Selecione </option>
+                <option value="1 F2"> 1° Fund. 2 </option>
+                <option value="2 F2"> 2° Fund. 2 </option>
+                <option value="3 F2"> 3° Fund. 2 </option>
+                <option value="4 F2"> 4° Fund. 2 </option>
+                <option value="5 F2"> 5° Fund. 2 </option>
+                <option value="6 F2"> 6° Fund. 2 </option>
+                <option value="7 F2"> 7° Fund. 2 </option>
+                <option value="8 F2"> 8° Fund. 2 </option>
+                <option value="9 F2"> 9° Fund. 2 </option>
+                <option value="1 EM"> 1° EM </option>
+                <option value="2 EM"> 2° EM </option>
+                <option value="2 TI"> 2° TI </option>
+                <option value="2 AC"> 2° AC </option>
+                <option value="3 EM"> 3° EM </option>
+                <option value="3 TI"> 3° TI </option>
+                <option value="3 AC"> 3° AC </option>
+            </select>
+        </div>
+        <div class="col col-md-4">
+            <label alt="id-nota">Nota</label>
+            <input class="form-control" type="text" name="nota" id="id-nota" />
+        </div>
+    </div>
+    <div>
+        <input type="submit" class="btn-primary"/>
+    </div>
+</form>
+

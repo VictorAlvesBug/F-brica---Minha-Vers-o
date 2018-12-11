@@ -1,0 +1,146 @@
+﻿@model Fiap03.Web.MVC.Models.CarroModel
+
+@* LISTA TODOS OS ERROS DE VALIDAÇÃO QUE OCORRERAM *@
+@* @Html.ValidationSummary() *@
+
+<div class="row">
+    <div class="col">
+        <h3 class="text-center">Carro</h3>
+        <div class="row">
+            <div class="form-group col">
+                @Html.LabelFor(c => c.MarcaId)
+                @Html.DropDownListFor(c => c.MarcaId,
+                ViewBag.marcas as SelectList,
+                "Selecione",
+                new {
+                @class = "form-control"
+                })
+                @Html.ValidationMessageFor(c => c.MarcaId)
+            </div>
+            @if (Model == null)
+            {
+            <div class="form-group col" id="ConjuntoModelos" style="display:none;">
+                <label for="ModeloId">Modelo</label>
+                <select class="form-control valid" data-val="true"
+                        data-val-number="The field Modelo must be a number."
+                        data-val-required="Campo obrigatório"
+                        id="ModeloId" name="ModeloId"></select>
+                @Html.ValidationMessageFor(c => c.ModeloId)
+            </div>
+            }
+            else
+            {
+            <div class="form-group col" id="ConjuntoModelos">
+                <label for="ModeloId">Modelo</label>
+                <select class="form-control valid" data-val="true"
+                        data-val-number="The field Modelo must be a number."
+                        data-val-required="Campo obrigatório"
+                        id="ModeloId" name="ModeloId"></select>
+                @Html.ValidationMessageFor(c => c.ModeloId)
+            </div>
+            }
+        </div>
+        <div class="row">
+            <div class="form-group col">
+                @Html.LabelFor(c => c.Combustivel)
+                @Html.EnumDropDownListFor(c => c.Combustivel,
+                    "Selecione",
+                    new { @class = "form-control" })
+                @Html.ValidationMessageFor(c => c.Combustivel)
+            </div>
+            <div class="form-group col">
+                @Html.LabelFor(c => c.Ano)
+                @Html.TextBoxFor(c => c.Ano,
+         new
+         {
+             placeholder = "Ex: " + DateTime.Now.Year,
+             @class = "form-control",
+             autocomplete = "off"
+         })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col">
+                @Html.LabelFor(c => c.Placa)
+                @Html.TextBoxFor(c => c.Placa,
+         new
+         {
+             placeholder = "Ex: ABC-1234",
+             @class = "form-control",
+             autocomplete = "off"
+         })
+                @Html.ValidationMessageFor(c => c.Placa)
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col">
+                @Html.CheckBoxFor(c => c.Esportivo)
+                @Html.LabelFor(c => c.Esportivo)
+                @Html.ValidationMessageFor(c => c.Esportivo)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(c => c.Descricao)
+            @Html.TextAreaFor(c => c.Descricao,
+     new
+     {
+         placeholder = "Ex: Carro 4 portas, 0 Km...",
+         @class = "form-control"
+     })
+            @Html.ValidationMessageFor(c => c.Descricao)
+        </div>
+    </div>
+    <div class="col">
+        <h3 class="text-center">Documento</h3>
+        <div class="col">
+
+            <div class="form-group">
+                @Html.LabelFor(d => d.Documento.Renavam)
+                @if (Model == null)
+                {
+                    @Html.TextBoxFor(d => d.Documento.Renavam,
+                     new
+                     {
+                         placeholder = "Ex: 54321012345",
+                         @class = "form-control",
+                         autocomplete = "off"
+                     })
+                }
+                else
+                {
+                    @Html.TextBoxFor(d => d.Documento.Renavam,
+                     new
+                     {
+                         placeholder = "Ex: 54321012345",
+                         @class = "form-control",
+                         autocomplete = "off",
+                         @readonly = "readonly"
+                     })
+                }
+                @Html.ValidationMessageFor(c => c.Documento.Renavam)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(d => d.Documento.DataFabricacao)
+                @Html.TextBoxFor(d => d.Documento.DataFabricacao,
+               "{0:dd/MM/yyyy}",
+         new
+         {
+             placeholder = "Ex: " + DateTime.Now.ToShortDateString(),
+             @class = "form-control",
+             autocomplete = "off"
+         })
+                @Html.ValidationMessageFor(c => c.Documento.DataFabricacao)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(d => d.Documento.Categoria)
+                @Html.EnumDropDownListFor(d => d.Documento.Categoria,
+                "Selecione",
+                new
+                {
+                    @class = "form-control"
+                })
+                @Html.ValidationMessageFor(c => c.Documento.Categoria)
+            </div>
+        </div>
+    </div>
+</div>

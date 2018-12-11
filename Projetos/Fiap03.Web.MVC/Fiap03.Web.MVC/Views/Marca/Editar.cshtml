@@ -1,0 +1,54 @@
+﻿@model Fiap03.Web.MVC.Models.MarcaModel
+
+@{
+    ViewBag.Title = "Editar marca";
+}
+
+<h2 class="text-center">Editar marca</h2>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.Partial("_MarcaForm")
+
+    <div class="form-group">
+        @Fabrica.Botao("Editar", "btn btn-primary")
+        @Html.ActionLink("Cancelar", "Listar", new { }, new { @class = "btn btn-success" })
+    </div>
+}
+
+@section scripts
+{
+
+    <script>
+        $().ready(function () {
+            $('#Nome').blur(function () {
+                //RECUPERA O VALOR DO CAMPO
+                alert($('#Nome').val());
+            });
+
+            $('#Cnpj').blur(function () {
+                $.ajax({
+                    url: "/Marca/ValidarCnpj",
+                    type: "GET",
+                    data: { cnpj: $(this).val() },
+                    success: function (data) {
+                        if (!data.valido) {
+                            $('span[data-valmsg-for=Cnpj]')
+                                .text('CNPJ já existente')
+                                .addClass('field-validation-error');
+                        }
+                    },
+                    error: function () {
+                        alert("Erro ao requisitar o servidor");
+                    }
+                });
+            });
+
+            $('#DataCriacao').datepicker();
+            $('#DataCriacao').inputmask('99/99/9999');
+            $('#Cnpj').inputmask('99-999-999/9999-99');
+        });
+
+    </script>
+}

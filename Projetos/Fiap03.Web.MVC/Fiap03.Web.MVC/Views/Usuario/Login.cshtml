@@ -1,0 +1,31 @@
+﻿@model Fiap03.Web.MVC.ViewModel.UsuarioViewModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="container alert-primary col-4" style="border-radius:20px">
+    <br />
+    <h2 class="text-center container-fluid">Login</h2>
+    <br />
+    @using (Html.BeginForm())
+    {
+        @Html.HiddenFor(u => u.Url)
+        <div class="form-group">
+            @Html.LabelFor(u => u.Login)
+            @Html.TextBoxFor(u => u.Login, new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(u => u.Senha)
+            @Html.PasswordFor(u => u.Senha, new { @class = "form-control" })
+        </div>
+
+        <div class="col text-center">
+            @Fabrica.Botao("Entrar", "col text-center")
+        </div>
+        <br />
+    }
+</div>
+
+@Html.ValidationSummary()

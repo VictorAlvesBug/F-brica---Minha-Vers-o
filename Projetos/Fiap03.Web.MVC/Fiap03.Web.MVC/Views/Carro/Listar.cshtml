@@ -1,0 +1,111 @@
+﻿
+@model IList<Fiap03.Web.MVC.Models.CarroModel>
+
+@{
+    ViewBag.Title = "Listar carro";
+}
+
+@Fabrica.Mensagem(@TempData["msg"] as String)
+
+<h2 id="titulo" class="text-center">Lista de Carros - Filtro</h2>
+<hr />
+
+@using (Ajax.BeginForm("Pesquisar", null,
+            new AjaxOptions
+            {
+                HttpMethod = "Get",
+                UpdateTargetId = "linhas",
+                InsertionMode = InsertionMode.Replace
+            },
+            new { id = "meuForm" }))
+{
+    <div class="row" style="margin: 20px auto;">
+        <div class="col">
+            <select name="ano" class="form-control" onchange="/*mudouOpcao();*/">
+                <option value="0">Selecione</option>
+                @for (var i = DateTime.Now.Year + 2; i >= 1980; i--)
+                {
+                    <option>@i</option>
+                }
+            </select>
+        </div>
+
+        <div class="col">
+            @Fabrica.Botao("Pesquisar")
+        </div>
+        <div class="col"></div>
+        <div class="col"></div>
+    </div>
+}
+
+@if (Model.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr class="text-center">
+                <th class="align-middle"> Id                 </th>
+                <th class="align-middle"> Marca              </th>
+                <th class="align-middle"> Modelo             </th>
+                <th class="align-middle"> Ano                </th>
+                <th class="align-middle"> Placa              </th>
+                <th class="align-middle"> Esportivo          </th>
+                <th class="align-middle"> Combustível        </th>
+                <th class="align-middle"> Descrição          </th>
+                <th class="align-middle"> Renavam            </th>
+                <th class="align-middle"> Categoria          </th>
+                <th class="align-middle"> Data de Fabricação </th>
+                <th class="align-middle" colspan="2"> Ações  </th>
+            </tr>
+        </thead>
+        <tbody id="linhas">
+            @Html.Partial("_Dados", Model)
+        </tbody>
+    </table>
+}
+else
+{
+    @Fabrica.Mensagem("Nenhum carro encontrado")
+}
+
+<!-- Modal Excluir -->
+<div class="modal fade" id="modalExcluir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Deseja excluir este carro?</p>
+            </div>
+            <div class="modal-footer">
+                <!-- FORMULÁRIO URL: /Carro/Excluir - POST -->
+                @using (Html.BeginForm("Excluir", "Carro"))
+                {
+                    <!-- CAMPO PARA O ID -->
+                    <input type="hidden" name="codigo" id="codigoExcluir" />
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Excluir</button>
+                    <!-- QUANDO USAMOS O TYPE=SUBMIT ELE ENVIA OS DADOS DO FORMULARIO PARA O ENDEREÇO ESPECIFICADO -->
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function mudouOpcao() {
+        // RECUPERA ELEMENTOS DA PAGINA
+        // FUNCIONA DA MESMA FORMA
+        //nomeDoId.innerHTML = "Texto";
+        //document.getElementById("nomeDoId").innerHTML = "Texto";
+
+        // MUDA COR DO ELEMENTO
+        //titulo.style.color = "#ff0040";
+
+        //ENVIA DADOS DO FORM
+        meuForm.submit();
+    }
+</script>

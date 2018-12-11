@@ -1,0 +1,173 @@
+﻿
+@model Fiap03.Web.MVC.Models.CarroModel
+
+@{
+    /**/
+
+    /**/
+
+
+    ViewBag.Title = "Cadastrar carro";
+}
+
+<!-- ISTO É UM COMENTÁRIO HTML - VAI PARA O CÓDIGO FINAL (SOURCE CODE) -->
+@* ISTO É UM COMENTÁRIO C# - NÃO VAI PARA O CÓDIGO FINAL (SOURCE CODE) *@
+
+@Fabrica.Mensagem(@TempData["msg"] as String)
+
+<!-- POR HTML - PADRÃO É GET -->
+<!-- POR C# - PADRÃO É POST -->
+<!--
+    <div class="row">
+    <div class="col">
+        <div class="form-group">
+            <label>label1</label>
+            <input class="match-parent-height" />
+        </div>
+    </div>
+    <div class="col">
+        <div class="form-group">
+            <label>label2</label>
+            <input class="match-parent-height" />
+        </div>
+    </div>
+</div>
+    -->
+
+@Html.ValidationSummary()
+
+@using (Html.BeginForm())
+{
+    <div>
+        <div>
+            <h2 class="text-center">Cadastrar carro</h2>
+            <hr />
+        </div>
+        <div>
+            @Html.Partial("_CarroForm")
+
+            <div class="col text-center">
+                <!-- <button type="submit" class="btn btn-primary">Cadastrar</button> -->
+                @Fabrica.Botao("Cadastrar")
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts
+    {
+    <script>
+
+        // $() e $(document) funciona igual
+
+        //QUANDO A PAGINA CARREGAR
+        $().ready(function () {
+            //ESCONDE TODOS OS BUTTONS
+            $('tbody .btn').hide();
+
+            // FUNCIONA IGUAL
+            // $('select[name=Documento_Categoria]')
+            // $('#Documento_Categoria')
+
+            //QUANDO O SELECT  DE CATEGORIA FOR MODIFICADO
+            //EXIBE OS BOTOES
+            //SELECIONAR O SELECT --> DAR UM EVENTO
+            $('#Documento_Categoria').on("change", function () {
+                if ($(this).val() == "") {
+                    $('.btn').hide();
+                }
+                else {
+                    $('.btn').show();
+                }
+            });
+
+            $('#MarcaId').on("change", function () {
+                if ($(this).val != "") {
+                    CarregarModelos();
+                }
+                else {
+                    $('#ConjuntoModelos').css('display', 'none');
+                }
+            });
+
+            $('#Placa').blur(function () {
+                $.ajax({
+                    url: "http://localhost:8080/Carro/ValidarPlaca",
+                    type: "GET",
+                    data: { placa: $(this).val() },
+                    success: function (data) {
+                        if (!data.valida) {
+                            $('span[data-valmsg-for=Placa]')
+                                .text('Placa já existente')
+                                .addClass('field-validation-error');
+                        }
+                    },
+                    error: function () {
+                        alert("Erro ao requisitar o servidor");
+                    }
+                });
+            });
+
+            $('#Documento_Renavam').blur(function () {
+                $.ajax({
+                    url: "/Carro/ValidarRenavam",
+                    type: "GET",
+                    data: { renavam: $(this).val() },
+                    success: function (data) {
+                        if (!data.valido) {
+                            $('span[for=Documento_Renavam]')
+                                .text('Renavam já existente')
+                                .addClass('field-validation-error');
+                            alert("HEY");
+                        }
+                        else {
+                            alert("HOO");
+                        }
+                    },
+                    error: function () {
+                        alert("Erro ao requisitar o servidor");
+                    }
+                });
+            });
+
+
+            $('#Documento_DataFabricacao').datepicker();
+            $('#Placa').inputmask('aaa-9999');
+            $('#Documento_Renavam').inputmask('99999999999');
+            $('#Ano').inputmask('9999');
+            $('#DataFabricacao').inputmask('99/99/9999');
+        });
+
+        function CarregarModelos() {
+            //$('#ConjuntoModelos').show();
+            $.ajax({
+                //FUNCIONA IGUAL
+                //url: "http://localhost:8080/Carro/BuscarModelos",
+                url: "/Carro/BuscarModelos",
+                type: "GET",
+                data: { marcaId: $('#MarcaId').val() },
+                success: function (data) {
+                    //if(data.){
+                    $('#ConjuntoModelos').css('display', '');
+                    $('#ModeloId').empty();
+                    $('#ModeloId').append(
+                        $('<option>').text('Selecione').val("")
+                    );
+                    $.each(data, function (index, modelo) {
+                        var op = $('<option>').text(modelo.Nome).val(modelo.Id);
+                        $('#ModeloId').append(op);
+                    });
+                    /*}*/
+
+                    // $('ul')...
+                    // COM '<' E '>' CRIA A TAG
+                    // $('<ul>')...
+                    // SEM '<' E '>' RETORNA A TAG EXISTENTE
+                },
+                error: function () {
+                    alert('Erro ao carregar os modelos');
+                }
+            });
+        }
+    </script>
+}
